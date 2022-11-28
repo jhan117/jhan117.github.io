@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "자료 구조"
 categories: data-structure
 ---

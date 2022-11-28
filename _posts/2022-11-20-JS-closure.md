@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "JS closure"
 categories: JavaScript
 ---
@@ -55,4 +54,5 @@ inner 함수를 호출하면 inner 함수의 실행 컨텍스트가 생성되고
 클로저는 상태(state)가 의도치 않게 변경되지 않도록 안전하게 은닉(information hiding)하고 특정 함수에게만 상태 변경을 허용하여 상태를 안전하게 변경하고 유지하기 위해 사용한다.
 
 출처 :
+
 - [모던 자바스크립트 Deep Dive 388p](http://www.yes24.com/Product/Goods/92742567) - 24 클로저

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "JS 비동기 처리 방법들 (콜백 함수, 프로미스)"
 categories: JavaScript
 ---

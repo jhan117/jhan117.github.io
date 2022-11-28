@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "React 생명주기 메서드"
 categories: React
 ---

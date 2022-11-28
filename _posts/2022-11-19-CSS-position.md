@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "CSS position"
 categories: css
 ---
@@ -15,4 +14,5 @@ CSS `position` 속성은 문서 상에 요소를 배치하는 방법을 지정�
 `sticky` : 요소를 일반적인 문서 흐름에 따라 배치하고, 테이블 관련 요소를 포함해 가장 가까운, 스크롤 되는 조상과, 표 관련 요소를 포함한 컨테이닝 블록을 기준으로 `top`, `right`, `bottom`, `left`의 값에 따라 오프셋을 적용한다. 오프셋은 다른 요소에는 영향을 주지 않는다.
 
 출처 :
+
 - [position - MDN](https://developer.mozilla.org/ko/docs/Web/CSS/position)

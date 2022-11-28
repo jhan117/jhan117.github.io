@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "JS 동기 처리와 비동기 처리"
 categories: JavaScript
 ---
@@ -43,6 +42,7 @@ categories: JavaScript
 데이터를 서버에 요청할 때 요청 응답을 동기 처리로 무작정 기다리는 것보단 요청이 끝나면 태스크 큐에 넣고 이벤트 루프에 의해 콜 스택으로 이동시켜 요청이 끝나고 받으면 블로킹이 발생하지 않는다.
 
 출처 :
+
 - [동기, 비동기 처리 - daybreak](https://velog.io/@daybreak/%EB%8F%99%EA%B8%B0-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC)
 - [어쨌든 이벤트 루프는 무엇입니까? - JSConf](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [모던 자바스크립트 Deep Dive 809p](http://www.yes24.com/Product/Goods/92742567) - 42 비동기 프로그래밍

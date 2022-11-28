@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "JS 이터레이션 프로토콜"
 categories: JavaScript
 ---
@@ -35,5 +34,6 @@ ES6에서 도입된 이터레이션 프로토콜은 순회 가능한(iterable) �
 - 이터레이터는 이터러블의 요소를 탐색하기 위한 포인터 역할을 한다.
 
 출처 :
+
 - [이터러블에 대하여](https://velog.io/@dltkdals224/JavaScript-%EC%9D%B4%ED%84%B0%EB%9F%AC%EB%B8%94%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
 - [모던 자바스크립트 Deep Dive 614p](http://www.yes24.com/Product/Goods/92742567) - 34 이터러블

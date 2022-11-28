@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "면접 스터디 추가 답변 정리"
 categories: CS
 ---

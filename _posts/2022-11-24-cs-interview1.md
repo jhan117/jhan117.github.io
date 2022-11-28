@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "CS 면접 질문 1"
 categories: CS
 ---

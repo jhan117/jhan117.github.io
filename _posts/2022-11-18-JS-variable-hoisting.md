@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "변수 호이스팅이란?"
 categories: JavaScript
 ---
@@ -23,4 +22,5 @@ var score;
 사실 변수 선언뿐 아니라 var, let, const, function, function\*, class 키워드를 사용해서 선언하는 모든 식별자(변수, 함수, 클래스 등)는 호이스팅 된다. 모든 선언문은 런타임 이전 단계에서 먼저 실행되기 때문이다.
 
 출처 :
+
 - [모던 자바스크립트 Deep Dive 42p](http://www.yes24.com/Product/Goods/92742567) - 4.4 변수 선언의 실행 시점과 변수 호이스팅

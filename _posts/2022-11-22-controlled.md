@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "React 제어 컴포넌트 vs 비제어 컴포넌트"
 categories: React
 ---

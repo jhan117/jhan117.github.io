@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "React props vs state"
 categories: React
 ---
