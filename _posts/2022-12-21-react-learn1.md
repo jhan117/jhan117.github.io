@@ -35,8 +35,9 @@ function Welcome(props) {
   return (
     <div>
       <h1>Hello, {props.name}</h1>
-      <p>I hope you enjoy learning React!<p>
-    </div>);
+      <p>I hope you enjoy learning React!</p>
+    </div>
+  );
 }
 ```
 
@@ -45,7 +46,7 @@ function Welcome(props) {
 function Welcome(props) {
   return (
     <h1>Hello, {props.name}</h1>
-    <p>I hope you enjoy learning React!<p>
+    <p>I hope you enjoy learning React!</p>
     );
 }
 ```
