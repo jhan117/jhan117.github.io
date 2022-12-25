@@ -14,7 +14,7 @@ last_modified_at: 2022-12-22
 - UI를 업데이트하고 "State" 사용해보기 (Updating the UI & Working with "State")
 - Components와 State에 대해 자세히 살펴보기 (A Closer Look At Components & State)
 
-### Handling Events
+## Handling Events
 
 기존에는 addEventListener를 호출하는 방식이었다. 이는 명령형으로 React에서는 JSX에 on으로 시작하는 이벤트 props를 선언형으로 넘겨주면 이벤트를 처리할 수 있다.
 
@@ -30,7 +30,7 @@ const Hello = () => {
 };
 ```
 
-### Updating the UI & Working with "State"
+## Updating the UI & Working with "State"
 
 이벤트 핸들러 함수에 특정 변수를 변경해도 값은 변경되지만 화면에는 구성이 안되는 것을 확인할 수 있다. 이는 React가 한 번 불러오면 다시 실행하지 않기 때문인데 다시 실행하더라도 초기화된 값만 평생 가질 것이다. React는 이를 위해 "State"라는 개념을 도입했다. 물론 React에만 있는 개념은 아니다.
 
@@ -51,7 +51,7 @@ const Hello = () => {
 };
 ```
 
-#### 여러가지 useState 호출
+### 여러가지 useState 호출
 
 State는 독립적이기에 여러번 선언해도 상관없다. 합쳐서 한 줄로해도 되고 다수의 줄로 생성해도 된다.
 
@@ -84,7 +84,7 @@ setUserInput((prevState) => {
 });
 ```
 
-#### 양방향 바인팅
+### 양방향 바인팅
 
 양방향 바인딩이 되어 있는데 업데이트를 할 수 있고 그 상태를 다시 보내주기도 한다. 무한루프처럼 들리겠지만 그렇진 않으니 문제는 없다. 이는 폼 전송을 할 때 유용하다.
 
@@ -97,7 +97,7 @@ setUserInput((prevState) => {
 />
 ```
 
-#### 자식 컴포넌트 → 부모 컴포넌트로 데이터 전달하는 법 (상향식)
+### 자식 컴포넌트 → 부모 컴포넌트로 데이터 전달하는 법 (상향식)
 
 관례적으로 on으로 시작해서 넘겨주는 걸 선호한다고한다. 핵심은 부모에서 함수를 props로 넘겨주고 자식에서 props로 함수를 실행하는 것이다. state 끌어올린다고도 한다.
 
@@ -133,9 +133,9 @@ const Child = (props) => {
 };
 ```
 
-### A Closer Look At Components & State
+## A Closer Look At Components & State
 
-#### State
+### State
 
 컴포넌트별 인스턴트에 대해서 독립된 state를 가진다. 즉 state가 적용된 똑같은 컴포넌트를 재사용해도 독립적으로 이벤트가 진행된다는 장점이 있다.
 

@@ -27,9 +27,9 @@ last_modified_at: 2022-12-23
 - 디버깅 & React 앱 분석하기 (Debugging & Analyzing React Apps)
 - React devTools 사용하기 (Using React DevTools)
 
-### 렌더링 리스트 및 조건부 Content
+## 렌더링 리스트 및 조건부 Content
 
-#### 동적으로 목록 출력하기
+### 동적으로 목록 출력하기
 
 기존에는 아이템을 복붙해서 나열하는 식으로 작성했다. 그러나 이 방법으로는 몇 개의 아이템이 필요할지 모르고 아이템이 추가되면 업데이트 되지 않기 때문에 정적 목록이었다. 이제 동적으로 map 함수를 이용해서 작성할 수 있다.
 
@@ -63,7 +63,7 @@ key props를 추가하지 않으면 react는 모든 아이템을 업데이트 �
 }
 ```
 
-#### 조건부 내용 출력하기
+### 조건부 내용 출력하기
 
 만약 목록에 아이템이 하나도 없다면 알려줘야 한다. 그렇지만 jsx에 중괄호 안에 for이나 if같은 긴 문법은 사용할 수 없다. 그대신 삼항 연산자를 사용하여 조건문을 생성할 수 있다. 또한 논리 연산자를 이용해 두 줄로 쓸 수 있다. 그러나 이들도 jsx에 쓰면 과해보일 수 있다. 그래서 변수를 이용하는 방법도 있다. 가독성이 좋은 건 변수를 이용하는 것이지만 사람들마다 선호하는 방법이 다 다르기에 본인이 선호하는 것을 사용하면 된다.
 
@@ -119,9 +119,9 @@ const list = (props) => {
 export default list;
 ```
 
-### 리액트 컴포넌트 스타일링
+## 리액트 컴포넌트 스타일링
 
-#### css에서 동적 스타일 추가하기
+### css에서 동적 스타일 추가하기
 
 만약 값에 따라 변하는 스타일을 추가하고 싶다면 style로 넘겨주면 된다. 대신 객체 상태로 넘겨줘야 하며 key는 css 프로퍼티 이름을 작성하고 value에는 value를 작성해주면 된다. 만약 "-"가 들어간 프로퍼티를 주려면 카멜케이스로 적어서 넘겨주면 된다. 예를 들면, 'background-color'는 'backgroundColor'로 사용된다. 이를 inline 스타일이라고 한다. 그렇지만 이는 css보다 최우선으로 적용되기 때문에 선호하지 않는다고 한다.
 
@@ -141,13 +141,13 @@ return <div style={{ height: barHeight, backgroundColor: "black" }}></div>;
 <div className={`default ${!isValid ? "invalid" : ""}`}></div>
 ```
 
-#### css 작성하는 법
+### css 작성하는 법
 
 기존 css 파일을 작성하면 전역으로 적용되기 때문에 이름이 겹치면 스타일이 중복 적용되는 문제점이 있다. 이를 해결하기 위해 크게 두가지 방법을 사용할 수 있는데 하나는 Styled Components 라이브러리를 사용하는 것이고 두번째는 css Module을 사용할 수 있다. 이 둘은 모두 작성한 파일에서만 클래스가 유효하다.
 
 3가지 방법 중 어떤 것을 사용해도 본인의 취향이라고 한다. 각각의 장단점이 있으니 선호하는 것을 고르자.
 
-##### Styled Components
+#### Styled Components
 
 [공식 사이트](https://styled-components.com/) | [공식 문서](https://styled-components.com/docs)
 
@@ -225,7 +225,7 @@ const Button = styled.button`
 `;
 ```
 
-##### CSS Modules
+#### CSS Modules
 
 어떤 방법을 선택하든 상관없지만 강의하시는 분은 js에서 css 파일을 분리하는 것을 좋아해서 css module을 사용한다고 한다.
 
@@ -263,9 +263,9 @@ classes 또는 styles는 객체로 클래스 이름들을 프로퍼티로 갖는
 
 미디어 쿼리는 기존의 CSS 처럼 module.css에 사용하면 된다.
 
-### 리액트 앱 디버깅하기
+## 리액트 앱 디버깅하기
 
-#### 에러 메시지 이해하기
+### 에러 메시지 이해하기
 
 `Parsing error: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?` -> 한 개의 루트 요소로 반환해야 하는데 그렇지 못한 경우에 나타나는 에러 메시지이다. 원인은 React.createElement가 하나의 요소만 반환하기 때문이다.
 
@@ -281,7 +281,7 @@ return (
 
 `'adHandler' is not defined` -> 오타거나 선언하지 않았거나 등등 함수를 찾을 수 없을 때 나타나는 에러 메시지이다. 오타이면 수정해주면 된다. 선언한 부분으로 가 원인을 찾아야 한다.
 
-#### 디버깅 & React 앱 분석하기
+### 디버깅 & React 앱 분석하기
 
 만약 논리적 오류를 만난다면
 
@@ -290,7 +290,7 @@ return (
   1.  브라우저의 Sources 탭에서 원본 소스 파일을 찾는다.
   2.  breakpoint를 설정하고 하나씩 실행하면서 저장된 값을 보면서 파악하면 된다.
 
-#### React devTools 사용하기
+### React devTools 사용하기
 
 크롬에서 설치할 수 있다. React devTools라고 치면 React Developer Tools 라는 이름의 확장 프로그램을 설치할 수 있다.
 
