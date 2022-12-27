@@ -1,11 +1,11 @@
 ---
-title: "React 강의 정리 6"
+title: "Reducer를 사용하여 Side Effects 처리 & Context API 사용하기"
 categories:
   - "React"
 toc: true
 toc_label: "section 10"
 toc_sticky: true
-last_modified_at: 2022-12-26
+last_modified_at: 2022-12-27
 ---
 
 ## 학습 목표
@@ -139,7 +139,7 @@ const passwordChangeHandler = (event) => {
 - '내장'API 또는 함수를 추가할 필요가 없다. (ex. `fetch()`, `localStorage`)
 - 구성 요소 외부에서 정의한 변수나 함수를 추가할 필요없다. (useEffect 훅 밖에서 선언한 변수 또는 함수는 작성해도 영향을 끼치지 않는다.)
 
-즉, 구성 요소가 다시 렌더링되어 이러한 것들이 변경될 수 있는 경우에 추가해야 한다. 라고 강의에서 말하는데 본인은 프로젝트를 할 때, 그냥 어떤 것들이 변경되면 리렌더링 되었으면 좋겠다고 생각하는 그 어떤 것들만 작성했다.
+즉, 구성 요소가 다시 렌더링되어 이러한 것들이 변경될 수 있는 경우에 추가해야 한다. ~~라고 강의에서 말하는데 본인은 프로젝트를 할 때, 그냥 어떤 것들이 변경되면 리렌더링 되었으면 좋겠다고 생각하는 그 어떤 것들만 작성했다.(수정: 이렇게 하면 안된다고 함~~)
 
 ### Cleanup
 
@@ -206,11 +206,305 @@ const validateEmailHandler = () => {
 
 state는 기존의 state이고, setState 대신 dispatchFn으로 액션을 수행한다. 그 액션은 reducerFn으로 넘겨주며 state의 함수 형태로 업데이트 하는 것과 유사하지만 액션이 있다. 초깃값은 initialState, 초기함수는 initFn 좀 더 복잡한 경우에 사용한다.
 
+자 이제 진짜로 reducer를 이용하여 만들어보자.
+
+1. useReducer를 호출하고 react 함수 내에서 선언한다.
+
+```js
+import { useReducer } from "react";
+
+const Login = () => {
+  const [emailState, dispatchEmail] = useReducer();
+};
+```
+
+2. useReducer에 넣을 Reducer 함수를 생성하고 초기 값을 넣어준다. 이 때, Reducer는 React 컴포넌트 함수 외부에서 선언 해야 한다.
+
+```js
+const emailReducer = (state, action) => {
+  return { value: "", isValid: false };
+};
+
+const Login = () => {
+  const [emailState, dispatchEmail] = useReducer(emailReducer, {
+    value: "",
+    isValid: null,
+  });
+};
+```
+
+#### state 사용 방법
+
+useState와 동일하게 사용하면 된다.
+
+```js
+<input value={emailState.value} />
+```
+
+#### state 업데이트 하는 방법
+
+useState와 동일하게 업데이트 하면 되지만 살짝 다르다.
+
+```js
+const emailReducer = (state, action) => {
+  // 만약 값을 받은 action이라면 받은 액션 값으로 리턴
+  if (action.type === "USER_INPUT") {
+    return { value: action.value, isValid: action.value.includes("@") };
+  }
+  // 만약 검증만을 위한 action이라면 기존값 state의 값으로 리턴
+  if (action.type === "INPUT_BLUR") {
+    return { value: state.value, isValid: state.value.includes("@") };
+  }
+
+  return { value: "", isValid: false }; // 이도저도 아닌 기본값
+};
+
+const Login = () => {
+  const [emailState, dispatchEmail] = useReducer(emailReducer, {
+    value: "",
+    isValid: null,
+  });
+
+  const emailChangeHandler = (event) => {
+    // action을 넘긴다. 값을 넣어줘야 하므로 넘겨줌.
+    dispatchEmail({ type: "USER_INPUT", value: event.target.value });
+
+    // reducer의 상태에서 isValid 값 상태를 넘긴다.
+    // 비밀번호도 reducer로 작성되었다고 가정함.
+    setFormIsValid(emailState.isValid && passwordState.isValid);
+  };
+
+  const validateEmailHandler = () => {
+    // action을 넘긴다.
+    dispatchEmail({ type: "INPUT_BLUR" });
+  };
+};
+```
+
+### 디바운싱으로 만든 useEffect가 너무 많이 호출되는 문제점 해결하기
+
+디바운싱은 좋은 방법이지만 만약 비밀번호가 7자리까지라는 유효성을 가지고 있을 때 문자 하나를 추가하는 경우에도 유효하지만 다시 useEffect가 실행된다. 이러한 문제 때문에 많이 호출된다는 생각을 가지고 있다.
+
+이를 위해 객체 디스트럭처링 개념을 사용해볼 수 있다. 이는 객체의 특정 속성을 추출하는 것이다. 사용은 간단하게 중괄호를 열고 그 안의 속성을 입력한 후 별칭을 콜론 옆에 써준다. 별칭을 만들어주는 이유는 emailState도 isValid고, passwordState에서도 isValid로 같은 이름을 사용하기 때문에 만들어줬다.
+
+```js
+// 객체 디스트럭처링(Destructuring)
+const { isValid: emailIsValid } = emailState;
+const { isValid: passwordIsValid } = passwordState;
+
+useEffect(() => {
+  const identifier = setTimeout(() => {
+    // 별칭 변수를 사용해주면 된다.
+    setFormIsValid(emailIsValid && passwordIsValid);
+  }, 500);
+
+  return () => {
+    clearTimeout(identifier);
+  };
+}, [emailIsValid, passwordIsValid]);
+```
+
+이렇게 되면 유효성이 바뀌지 않는 이상 재호출 되지 않는다는 장점이 있다. emailState.isValid로 사용하여도 똑같이 동작하지만 일반적으로는 디스트럭처링을 사용한다는 것이다. 어쨌거나 핵심은 전체 객체 대신 특정 속성을 종속성으로 전달한다는 점이 핵심이다.
+
+### `useState()` vs `useReducer()`
+
+|                   `useState()`                    |               `useReducer()`                |
+| :-----------------------------------------------: | :-----------------------------------------: |
+|               주요 state 관리 도구                |         더 강력함이 필요할 때 좋음          |
+|            개별적인 state/data에 좋음             |          연관된 state/data에 좋음           |
+| state 업데이트가 쉽고 종류가 적은 업데이트에 좋음 | 더 복잡한 state 업데이트가 있는 경우에 좋음 |
+
+### Context API
+
+다른 자식간의 props 전달이 불가능해 state 끌어올리기를 해야한다는 것을 떠올려보자. 만약 앱이 커진다면 props를 전달만 하고 사용하지 않는 컴포넌트가 생긴다. 물론 이것이 나쁜 것은 아니지만 많이 복잡한 앱의 경우 state를 경로를 찾기가 어려워진다. 긴 props 체인이 생긴다.
+
+이를 위해서 리액트 내부적으로 state 저장소 역할을 하는 Context API가 있다. 이는 부모에서 받아오지 않고 직접 받아올 수 있는 기능을 한다. props 체인 없이 구현할 수 있다.
+
+src 자식으로 폴더명은 context, state, store 아무거나 생성한다. 보통 store을 사용한다. 파일명은 자유롭게 해도 되지만 컴포넌트가 아니기 때문에 강사님은 케밥 표기법(kebab-case)을 사용하는 걸 추천한다고 한다.
+
+createContext에서 반환받는 것은 컴포넌트가 되거나 컴포넌트를 감싸는 것이 될 것이기에 파스칼 표기법(PascalCase)으로 작성해준다.
+
+```js
+// auth-context.js
+import { createContext } from "react";
+
+// 기본값을 넘겨준다.
+const AuthContext = createContext({
+  isLoggedIn: false,
+});
+
+export default AuthContext;
+```
+
+앱에서 사용하려면 두 가지 작업을 해야 한다. 첫째는 공급, 둘째는 소비이다. 공급은 "나 여기 있어"라고 알려주는 역할을 하며 소비는 연동하고 리스닝하는 것이다.
+
+#### 공급
+
+JSX 코드로 감싸는 것이다. 필요한 곳에서 감싸면 된다.
+
+```js
+<AuthContext.Provider>{/* ... 컴포넌트들 */}</AuthContext.Provider>
+```
+
+#### 소비
+
+이제 리스닝을 하는 것인데 이는 두 가지 방법이 있다. 소비자를 이용하거나 리액트 훅을 이용하는 방법이 있지만 일반적으로 리액트 훅 방식을 많이 사용한다.
+
+소비자는 함수 형태로 중괄호 사이에 자식을 갖는다. 인수로 컨텍스트 데이터를 갖고 JSX 코드를 반환한다. 그리고 사용하고 싶은 곳에서 사용하면 된다.
+
+컨텍스트 객체의 기본값은 공급자 없이 소비하는 경우에만 사용되므로 만약 변하지 않는다면 공급자가 필요없다. 따라서 소비자를 사용할 경우 공급자에서 값을 넘겨줘야 한다. 이렇게 하면 업데이트 될 때마다 값이 변경될 것이다. 물론 값에 함수도 넘겨줄 수 있다.
+
+```js
+// 데이터 넘겨줌
+<AuthContext.Provider
+  value={{ isLoggedIn: isLoggedIn, onLogout: logoutHandler }}
+>
+  {/* ... 컴포넌트들 */}
+</AuthContext.Provider>
+```
+
+```js
+// 이용될 데이터가 있는 곳
+<AuthContext.Consumer>
+  {(ctx) => {
+    return <div>{ctx.isLoggedIn && <p>Login</p>}</div>;
+  }}
+</AuthContext.Consumer>
+```
+
+다음으로 리액트 훅인 `useContext()`를 이용하는 방법을 설명하겠다.
+
+```js
+import { useContext } from "react";
+
+const ctx = useContext(AuthContext);
+
+return <div>{ctx.isLoggedIn && <p>Login</p>}</div>; // 변수 사용법은 같음
+```
+
+두 가지 방법 중 어느 것을 사용하든 상관은 없다. 소비자를 이용하는 것이 틀린 것은 아니지만 리액트 훅이 좀 더 우아한 방법이라고 한다.
+
+### 별도의 컨텍스트 관리 컴포넌트 만드는 법
+
+공급자 컴포넌트를 만들고 export 해준다. 그 안에 로직과 작성하고 공급자 컴포넌트를 반환해준 뒤 index.js에서 이 컴포넌트로 감싸주면 된다. 컨텍스트 사용법은 똑같다.
+
+```js
+// index.js
+root.render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);
+```
+
+```js
+// auth-context.js
+export const AuthContextProvider = (props) => {
+  // 관련 로직 (리액트 훅 사용 가능 컴포넌트이기 때문에)
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler,
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+```
+
+### Context 제한사항
+
+만약 자주 변경되는 곳에서 context를 사용하면 안된다. 매초마다 state가 변경되는 경우를 말한다. 왜냐하면 최적화되어 있지 않기 때문이다. 실제로 공식 리액트 팀원이 말한 것이다.
+
+그런데 만약 앱 전체에 걸쳐서 전달하는데 state가 자주 변경되는 경우에는 어떻게 해야할까? 나중에 배우겠지만 Redux를 사용하면 된다.
+
+다시 말하지만 긴 props 체인의 경우에는 Context를 사용하는 것이 좋지만 일반적인 경우까지 대체하는 것은 추천하지 않는다. props이 나쁜 것이 아니다. 그저 긴 props 체인이 생길 경우에만 context를 사용하길 권장한다.
+
+### Hooks의 규칙
+
+우리는 지금까지 4개의 훅을 배웠다. `useState()`,`useEffect()`, `useReducer()`, `useContext()`을 사용해봤다. 더 많은 훅이 있지만 아무튼 이젠 훅의 규칙을 배울 차례이다.
+
+중요한 규칙이 2개 있다.
+
+1. 리액트 함수에서만 호출해야한다.
+   - React 컴포넌트 함수
+   - 커스텀 훅
+2. 최상위 수준에서만 호출해야 한다.
+   - 중첩 함수(useEffect 내부 등)에서 호출 안됨
+   - block statement(if문, for문 등)에서 호출 안됨
+
+useEffect의 경우 항상 참조하는 모든 항목을 의존성으로 함수 내부에 추가 해야 한다. 그렇게 하지 않을 합당한 이유가 없다면 말이다.
+
+### Forward Refs
+
+이 훅은 Input과 명령형으로 상호작용할 수 있게 해준다. 이는 일반적인 리액트 패턴이 아니기 때문에 자주 해서는 안되지만 input이나 스크롤링과 같은 예외적인 곳에서는 아주 유용하다.
+
+예를 들어 제출을 할 때 유효하지 않은 input이 있다면 focus 기능을 넣고 싶다고 가정해보자. input 내부에 useEffect 함수에 ref를 넣고 focus를 실행시킬 수 있다. 그러나 이 방법은 항상 두번째만 포커스 될 것이다. 첫번째는 이미 일시적으로 포커스 됐다가 넘어간 상황으로 보일 것이다. 이런 방식으로는 구현할 수 없다. 그렇다면 Input 컴포넌트에 ref를 사용하고 싶어질 것이다.
+
+```js
+const inputRef = useRef();
+
+useEffect(() => {
+  inputRef.current.focus();
+}, []);
+```
+
+그래서 Input 컴포넌트를 ref 내장형처럼 사용할 수 있다. 마치 Input 컴포넌트가 input 태그인 마냥 참조할 수 있는 것이다. 이는 props.ref로 사용할 수 없다. 예약어이기 때문이다. 대신 useImperativeHandle라는 훅을 사용할 수 있는데 props나 state를 전달하지 않고 컴포넌트에서 무언가를 직접 호출하거나 조작해서 사용하게 해준다.
+
+```js
+// Input.js
+import { useRef, useImperativeHandle, forwardRef } from "react";
+
+// forwardRef로 감쌌지만 컴포넌트이다.
+const Input = forwardRef((props, ref) => {
+  const inputRef = useRef();
+
+  const activate = () => {
+    inputRef.current.focus();
+  };
+
+  useImperativeHandle(ref, () => {
+    // 외부에서 접근 가능한 이름을 객체로 키에 이름, 값에 함수를 넘겨준다.
+    return {
+      focus: activate,
+    };
+  });
+});
+```
+
+```js
+// Login.js
+const emailInputRef = useRef();
+const passwordInputRef = useRef();
+
+const submitHandler = () => {
+  if (!emailIsValid) {
+    emailInputRef.current.focus(); // Input.js에서 설정한 외부에서 접근 가능한 이름
+  } else {
+    passwordInputRef.current.focus();
+  }
+};
+
+return (
+  <form>
+    <Input ref={emailInputRef} />
+    <Input ref={passwordInputRef} />
+  </form>
+);
+```
+
+다시 말하지만 이 방식이 자주 사용되어서는 안된다. 그러나 인풋 트리거라던가 스크롤링 등 예외적으로 좋게 사용되는 상황은 있다.
+
 ## 궁금한 점
 
 나는 프로젝트를 진행할 때 의존성 배열에 Side Effect 함수 안에 있는 것을 모두 적지 않았고, 적더라도 몇 개만 적었다. 그리고 심지어는 context를 넣어서 리렌더링 시킨 경우가 많은데 내가 한 방식은 잘못된건가?? 작동은 해서 별 의심 안했는데 좀 더 알아봐야 할 문제 같다.
 
 위의 유효성 검사 코드에서도 굳이 입력시마다 검증 안해도 나는 제출시에 딱 한 번만 검증하게 의존성 배열에 button의 클릭 state를 만들어서 넣어줬다. 이런저런 방법이 있는건지 아니면 내 방식이 좋지 않은 코드인지는 모르겠다... 좀 더 조사해보기로 하자.
+
+강의를 계속 듣다보니 바로 나왔다. 합당한 이유가 없는 이상 내 방식대로 하면 안된다고 한다. 어멋... 프로젝트 전부 다 수정해야겠다.
 
 ---
 
