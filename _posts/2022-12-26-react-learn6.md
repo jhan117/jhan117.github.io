@@ -10,8 +10,6 @@ last_modified_at: 2022-12-27
 
 ## 학습 목표
 
-**고급 : 리듀서(Reducer)를 사용하여 부작용 처리 & 컨텍스트 API 사용하기**
-
 - (사이드) 이펙트 다루기 (Working with (Side) Effects)
 - Reducers를 이용해 더 복잡한 State 관리하기 (Managing more Complex State with Reducers)
 - Context로 앱 수준 또는 컴포넌트 수준 State 관리하기 (Managing App-Wide or Component-Wide State with Context)

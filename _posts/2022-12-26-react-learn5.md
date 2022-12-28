@@ -10,8 +10,6 @@ last_modified_at: 2022-12-26
 
 ## 학습 목표
 
-**심화 학습 더 깊이 다이빙 : Fragments, Portals & "Refs"**
-
 - JSX 제한사항 & Fragments (JSX Limitations & Fragments)
 - Portals를 이용해서 깨끗한 DOM을 얻기 (Getting a Cleaner DOM with Portals)
 - Refs 다루기 (Working with Refs)
