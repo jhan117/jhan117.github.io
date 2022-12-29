@@ -158,3 +158,9 @@ class ErrorBoundary extends React.Component {
   <MyWidget />
 </ErrorBoundary>
 ```
+
+---
+
+강의명
+
+- Udemy : React 완벽 가이드
