@@ -2,13 +2,14 @@
   {% capture teaser %}
     {{ post.header.teaser }}
   {% endcapture %}
-  {% else %}
-    {% assign teaser = site.teaser %}
-  {% endif %}
-  {% if post.id %}
-    {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
-  {% else %}
-    {% assign title = post.title %}
+{% else %}
+  {% assign teaser = site.teaser %}
+{% endif %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
 {% endif %}
 
 <div class="{{ include.type | default: 'list' }}__item">
@@ -36,16 +37,17 @@
       {% endif %}
     </h2>
     {% include page__meta.html type=include.type %}
-    {% if post.date %}
-      <p class="archive__item-excerpt" itemprop="description">
-        {{ post.date | date: '%Y-%m-%d' | markdownify | strip_html | truncate : 160 }}
-        {% assign m = post.date | date : '%w' | minus : 1 %}
-        ({{site.data.week[site.locale].week[m]}})
+    {% if post.categories %}
+      {% assign category = post.categories[0] %}
+      <p class="archive__item-footer" itemprop="category">
+        {{ category }}
       </p>
     {% endif %}
-    {% if post.categories %}
-      <p class="archive__item-excerpt" itemprop="description">
-        {{ post.categories[0] | markdownify | strip_html | truncate : 160 }}
+    {% if post.date %}
+      <p class="archive__item-footer" itemprop="date">
+        {{ post.date | date: '%Y-%m-%d' }}
+        {% assign day = post.date | date: '%w' | to_integer %}
+        ({{- site.data.week[site.locale].week[day] -}})
       </p>
     {% endif %}
   </article>

@@ -72,8 +72,8 @@
   }
 }
 
-.archive__item-excerpt {
-  margin-top: 0;
+.archive__item-footer {
+  margin: 0;
   font-size: $type-size-6;
 
   & + p {
@@ -214,7 +214,7 @@
     font-size: $type-size-5;
   }
 
-  .archive__item-excerpt {
+  .archive__item-footer {
     display: none;
 
     @include breakpoint($medium) {
