@@ -1,0 +1,11 @@
+{% assign categories = site.categories %}
+
+<div>
+  <a href="/" style="display: block;">All ({{- site.posts.size -}})</a>
+  <h4>Front End</h4>
+  {% if categories %}
+    <a style="display: block;">JavaScript ({{- categories["JavaScript"].size -}})</a>
+    <a href="/react-posts/" style="display: block;">React ({{- categories["React"].size -}})</a>
+    <a style="display: block;">Computer Science ({{- categories["CS"].size -}})</a>
+  {% endif %}
+</div>

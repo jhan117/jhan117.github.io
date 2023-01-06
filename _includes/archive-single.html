@@ -38,13 +38,12 @@
     </h2>
     {% include page__meta.html type=include.type %}
     {% if post.categories %}
-      {% assign category = post.categories[0] %}
-      <p class="archive__item-footer" itemprop="category">
-        {{ category }}
+      <p class="archive__item-footer" itemprop="keywords">
+        {{ post.categories }}
       </p>
     {% endif %}
     {% if post.date %}
-      <p class="archive__item-footer" itemprop="date">
+      <p class="archive__item-footer" itemprop="dateCreated">
         {{ post.date | date: '%Y-%m-%d' }}
         {% assign day = post.date | date: '%w' | to_integer %}
         ({{- site.data.week[site.locale].week[day] -}})
