@@ -5,7 +5,7 @@ categories:
 toc: true
 toc_label: "JS로 보는 Algorithms"
 toc_sticky: true
-last_modified_at: 2023-01-05
+last_modified_at: 2023-01-07
 ---
 
 ## Big-O
@@ -50,7 +50,11 @@ ForEach / map / filter / reduce - O(n)
 - 2 nested loops - O(n^2)
 - Input size reduced by half - O(logn)
 
+- Recursion = O(2^n)
+
 ## Math Algorithms
+
+- Recursion: base case 하나를 가져야 한다. 재귀 함수를 종료시킬 조건문을 말한다.
 
 ### Fibonacci Sequence
 
@@ -71,6 +75,26 @@ console.log(fibonacci(3)); // [0, 1, 1]
 console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
 ```
 
+### Recursive Fibonacci Sequence
+
+- base case: `F_0 = 0, F_1 = 1`
+- recursion case: `F_n = F_(n - 1) + F(n - 2)`
+
+- Big-O : O(2^n)
+
+```js
+function recursiveFibonacci(n) {
+  if (n < 2) {
+    return n;
+  }
+  return recursiveFibonacci(n - 1) + recursiveFibonacci(n - 2);
+}
+
+console.log(recursiveFibonacci(0)); // 0
+console.log(recursiveFibonacci(1)); // 1
+console.log(recursiveFibonacci(6)); // 8
+```
+
 ### Factorial of a number
 
 - Big-O: O(n)
@@ -87,7 +111,27 @@ function factorial(n) {
 
 console.log(factorial(0)); // 1
 console.log(factorial(1)); // 1
-console.log(factorial(5)); // 128
+console.log(factorial(5)); // 120
+```
+
+### Recursive Factorial of a number
+
+- base case: `F_0 = 1,`
+- recursion case: `F_n = n * F(n - 1)`
+
+- Big-O : O(2^n)
+
+```js
+function recursiveFactorial(n) {
+  if (n === 0) {
+    return 1;
+  }
+  return n * recursiveFactorial(n - 1);
+}
+
+console.log(recursiveFactorial(0)); // 0
+console.log(recursiveFactorial(1)); // 1
+console.log(recursiveFactorial(5)); // 120
 ```
 
 ### Prime Number
@@ -194,6 +238,28 @@ function isPowerOfTwoBitWise(n) {
 console.log(isPowerOfTwoBitWise(1)); // true
 console.log(isPowerOfTwoBitWise(2)); // true
 console.log(isPowerOfTwoBitWise(5)); // false
+```
+
+## Search Algorithms
+
+### Linear Search
+
+- Big-O: O(n)
+
+```js
+function linearSearch(arr, target) {
+  // 1 loop
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) {
+      return i;
+    }
+    return -1;
+  }
+}
+
+console.log(linearSearch([-5, 2, 10, 4, 6], 10)); // 2
+console.log(linearSearch([-5, 2, 10, 4, 6], 6)); // 4
+console.log(linearSearch([-5, 2, 10, 4, 6], 20)); // -1
 ```
 
 ---
