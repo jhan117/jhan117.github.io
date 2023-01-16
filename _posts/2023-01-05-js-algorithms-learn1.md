@@ -1,5 +1,5 @@
 ---
-title: "JS: Algorithms"
+title: "JS: Algorithms1"
 categories:
   - "CS"
 toc: true
