@@ -100,7 +100,7 @@ class Queue {
   }
 }
 
-const stack = new Stack();
+const queue = new Queue();
 ```
 
 #### 최적화된 Queue
@@ -142,8 +142,8 @@ class Queue {
   }
 }
 
-const stack = new Stack();
-```
+const queue = new Queue();
+``` 
 
 ### Circular queues
 
