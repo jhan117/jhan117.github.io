@@ -1,5 +1,5 @@
 ---
-title: "프로젝트 구조 [공식 문서 번역]"
+title: "프로젝트 구조 [Astro 문서 번역]"
 categories:
   - "Astro"
 toc: true
@@ -111,4 +111,14 @@ Compoennts는 HTML 페이지들에 대한 재사용 가능한 코드 단위입�
 
 이 파일은 모든 시작 템플릿에서 생성되고 Astro 프로젝트에 대한 구성 옵션을 포함합니다. 사용할 통합, 빌드 옵션, 서버 옵션 등을 지정할 수 있습니다.
 
-구성 설정에 대한 세부사항은 [Astro 구성 가이드](https://docs.astro.build/en/guides/configuring-astro/)에서 확인해보세요.
+구성 설정에 대한 세부사항은 [Astro 구성 가이드](https://docs.astro.build/en/guides/configuring-astro/)에서 확인해 보세요.
+
+## `tsconfig.json`
+
+이 파일은 모든 시작 템플릿에서 생성되고 Astro 프로젝트에 대한 TypeScript 구성 옵션을 포함합니다. 일부 기능은(npm package 가져오기 같은) `tsconfig.json` 파일이 없으면 에디터에서 완전히 지원되지 않습니다.
+
+구성 설정에 대한 세부사항은 [TypeScript 가이드](https://docs.astro.build/en/guides/typescript/)에서 확인해 보세요.
+
+---
+
+- [Astro DOCS - Project Structure](https://docs.astro.build/en/core-concepts/project-structure/)
