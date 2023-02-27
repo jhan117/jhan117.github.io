@@ -5,7 +5,6 @@ categories:
 toc: true
 toc_label: "프로젝트 구조"
 toc_sticky: true
-last_modified_at: 2023-02-25
 ---
 
 `create astro` CLI 마법사로 생성된 새로운 Astro 프로젝트는 이미 몇 가지 파일들과 폴더들이 포함되어 있습니다. 그 외로, 직접 작성하여 Astro 기존 파일 구조에 추가할 수 있습니다.
@@ -56,7 +55,7 @@ src/ 폴더는 대부분의 프로젝트 소스 코드가 있는 곳입니다. �
 
 - [Pages](https://docs.astro.build/en/core-concepts/astro-pages/)
 - [Layouts](https://docs.astro.build/en/core-concepts/layouts/)
-- [Astro components](https://docs.astro.build/en/core-concepts/astro-components/)
+- [Astro components](./2023-03-11-astro-components.md)
 - [UI framework components (React, etc.)](https://docs.astro.build/en/core-concepts/framework-components/)
 - [Styles (CSS, Sass)](https://docs.astro.build/en/guides/styling/)
 - [Markdown](https://docs.astro.build/en/guides/markdown-content/)
@@ -67,7 +66,7 @@ Astro는 `src/` 파일들을 가공하고 최적화하고 번들해 브라우저
 
 ## `src/components`
 
-Compoennts는 HTML 페이지들에 대한 재사용 가능한 코드 단위입니다. 이들은 [Astro components](https://docs.astro.build/en/core-concepts/astro-components/)나 React, Vue 같은 [UI framework components](https://docs.astro.build/en/core-concepts/framework-components/) 일 수 있습니다. 이 폴더에서 모든 프로젝트 components를 서로 그룹화하고 구성하는 것이 일반적입니다.
+Compoennts는 HTML 페이지들에 대한 재사용 가능한 코드 단위입니다. 이들은 [Astro components](./2023-03-11-astro-components.md)나 React, Vue 같은 [UI framework components](https://docs.astro.build/en/core-concepts/framework-components/) 일 수 있습니다. 이 폴더에서 모든 프로젝트 components를 서로 그룹화하고 구성하는 것이 일반적입니다.
 
 이는 Astro 프로젝트에서 일반적인 관습이지만 필수는 아닙니다. 원하는 대로 components를 자유롭게 구성하세요!
 
