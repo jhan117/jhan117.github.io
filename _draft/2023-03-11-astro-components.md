@@ -45,34 +45,34 @@ import Button from './Button.astro';
 
 ### Component Script
 
-Astro는 Astro component에서 component script를 식별하기 위해 code fence (`---`)를 사용합니다. 만약 전에 Markdown으로 써본 적이 있다면 이미 *frontmatter*라고 불리는 비슷한 개념에 친숙할지도 모릅니다. 이 개념에서 component script에 대한 Astro의 생각이 직접적으로 영감 받았습니다.
+Astro는 코드 펜스(code fence)(`---`)를 사용해 Astro component의 component script를 식별합니다. 이전에 Markdown을 써본 적이 있다면, 이미 *frontmatter*라고 불리는 비슷한 개념에 익숙할 것입니다. component script에 대한 Astro의 아이디어는 이 개념에서 직접적으로 영감을 받았습니다.
 
-템플릿을 렌더할 필요가 있는 어떤 JavaScript를 작성하기 위해 component script를 사용할 수 있습니다. 다음을 이를 포함합니다:
+component script를 사용하여 template 렌더링 하는 데 필요한 JavaScript 코드를 작성할 수 있습니다. 이는 다음을 포함합니다:
 
-- 다른 Astro components 불러오기
-- React 같은 다른 프레임워크 component 불러오기
-- JSON 파일 같은 데이타 불러오기
-- API 또는 데이터베이스로부터 content를 fetch하기
-- 템플릿에서 참조할 변수들을 생성하기
+- 다른 Astro components 가져오기
+- React 같은 다른 프레임워크 component 가져오기
+- JSON 파일 같은 데이터 가져오기
+- API 또는 데이터베이스에서 content fetch 하기
+- template에서 참조할 변수 만들기
 
-```js
+```jsx
 ---
 import SomeAstroComponent from '../components/SomeAstroComponent.astro';
 import SomeReactComponent from '../components/SomeReactComponent.jsx';
 import someData from '../data/pokemon.json';
 
-// `<X title="Hello, World" />`처럼, component props를 넘겨서 접근하기
+// `<X title="Hello, World" />`와 같은 전달된 component props에 접근하기
 const {title} = Astro.props;
-// 외부 데이터, private API나 데이터베이스로 부터 온 fetch
+// 개인 API이나 데이터베이스에서도 외부 데이터를 fetch하기
 const data = await fetch('SOME_SECRET_API_URL/users').then(r => r.json());
 ---
 <!-- Your template here! -->
 ```
 
-code fence는 "울타맃를 칠" 곳에 작성한 JavaScript를 보장하기 위해 설계되었습니다. frontend 애플리케이션에서 탈출할 수 없거나 사용자 접근성에서 떨어질 수 없습니다. 안전하게 여기서 코드를 상서ㅓㅇ할 수 있습니다. 비싸거나 민감한(private 데이터베이스로 부르려고 하는 것 같은) 걱정 없이, 사용자 브라우저에 ending up.
+코드 펜스는 당신이 작성한 JavaScript가 "펜스 된" 것을 보장하도록 설계되었습니다. frontend 애플리케이션으로 빠져나가거나 사용자의 손에 들어가지 않을 것입니다. 사용자의 브라우저에서 끝날까 봐 걱정하지 않고 비싸거나 민감한(개인적인 데이터베이스에서 요청한 것 같이) 코드를 안전하게 작성할 수 있습니다.
 
 > TIP
-> component Script에 TypeScript도 사용할 수 있습니다.
+> component script에 TypeScript을 작성할 수도 있습니다.
 
 ### Component Template
 
@@ -118,7 +118,91 @@ Astro component 안에 frontmatter component script의 안에서 지역 Javascip
 
 ### 변수
 
+지역 변수는 중괄호 문법을 사용해서 HTML에 추가될 수 있습니다.
+
+```jsx
+---
+const name = "Astro";
+---
+<div>
+  <h1>Hello {name}!</h1>  <!-- Outputs <h1>Hello Astro!</h1> -->
+</div>
+```
+
+### 동적 속성들
+
+지역 변수는 HTML 요소와 컴포넌트 둘 다에 속성 값을 넘겨 중괄호 안에서 사용될 수 있습니다.
+
+```jsx
+---
+const name = "Astro";
+---
+<h1 class={name}>Attribute expressions are supported</h1>
+
+<MyComponent templateLiteralNameAttribute={`MyNameIs${name}`} />
+```
+
+> 주의
+> HTML 속성은 문자열로 바뀔 수 있고, HTML 요소에 함수나 object를 전달하는 것이 불가능합니다. 예를 들어, Astro 컴포넌트 안에 HTML 요소에 이벤트 핸들러를 할당할 수 없습니다.
+> ```jsx
+  ---
+  function handleClick () {
+      console.log("button clicked!");
+  }
+  ---
+  <!-- ❌ This doesn't work! ❌ -->
+  <button onClick={handleClick}>Nothing will happen when you click me!</button>
+  ```
+> 대신, vanilla JavaScript에서 했던 것 처럼 이벤트 핸들러를 추가한 client-side 스크립트를 사용합니다.
+> ```jsx
+	---
+	---
+	<button id="button">Click Me</button>
+	<script>
+	function handleClick () {
+		console.log("button clicked!");
+	}
+
+	document.getElementById("button").addEventListener("click", handleClick);
+	</script>
+	```
+
+### 동적 HTML
+
+지역 변수는 동적으로 생성된 HTML 요소를 생성하기 위해 JSX 같은 함수에서 사용될 수 있습니다.
+
+Astro는 JSX 논리 연산자와 삼항 연산자를 사용해 HTML를 조건부로 표시할 수 있습니다.
+
+### 동적 태그
+
+또한 HTML 태그 이름이나 컴포넌트 import에 변수를 설정함으로써 동적 태그를 사용할 수 있습니다.
+
+동적 태그를 사용할 때:
+- 변수 이름은 대문자여야 합니다. 예를 들어, `element`가 아닌 `Element`를 사용합니다. Astro는 HTML 태그 문자 그대로로 변수 이름을 렌더하기 위해 시도할 것입니다.
+- 직접작용은 지원하지 않습니다. client:* hydration directives를 사용할 때, Astro는 어떤 컴포넌트가 생산을 위한 번들하는지 알필요가 있고 동적 태그 패턴은 작업으로부터 이를 예방합니다.
+
+### Fragments & 다수 요소들
+
+Astro 컴포넌트 템플릿은 JavaScript나 JS와 달리 모든 곳에 <div>나 <>로 감쌀 필요 없이 다수의 요소를 렌더할 수 있습니다.
+
+그러나, 동적으로 생성한 다수의 요소에서 표현을 사용할 때, JavaScript나 JS에서 했던 것처럼 Fragment 안에 이 요소들을 감싸야 합니다. Astro는 <Fragemnt></Fragment> 나 약칭 <></> 둘다 사용하는 걸 지원합니다.
+
+Fragments는 또한 set:* directives를 추가할 떄 요소를 감싸는걸 피할 떄 유용할 수 있습니다. 다음의 예시에서:
+
 ### Astro와 JSX 차이점
+
+Astro 컴포넌트 문법은 HTML의 상위 집합입니다. 이는 HTML이나 JSX 경험이 있는 사람이면 누구나 친숙하게 느끼도록 설계되었습니다. 그러나 .astro 파일들과 jsx 사이에 몇가지 핵심 차이점이 있습니다.
+
+#### 속성
+
+Astro에서 JSX에서 사용된 camelCase 대신에 모든 HTML 속성은 ㅍ준 kebab-case 형식을 사용합니다. class로 작업되는 React에서 지원되지 않습니다.
+
+#### 코멘트
+
+Astro에서 표준 HTML 코멘트나 JavaScript-style ㅋㅗ멘트를 사용할 수 있습니다.
+
+> 주의
+> HTML-style 콤ㅔㄴ트는 브라우저 DOM에 포함될 수 있습니다. 반면에 JS 것은 스킵될 수 있습니다. TODO 메시지나 다른 개발-only 표현을 남기기 위해서, 대신에 JavaScript-style 코멘트를 사용하길 원할지도 모릅니다.
 
 ---
 
