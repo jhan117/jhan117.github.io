@@ -131,7 +131,7 @@ const name = "Astro";
 
 ### 동적 속성들
 
-지역 변수는 HTML 요소와 컴포넌트 둘 다에 속성 값을 넘겨 중괄호 안에서 사용될 수 있습니다.
+지역 변수는 HTML 요소와 component 모두에 속성 값을 전달하기 위해 중괄호 안에서 사용될 수 있습니다:
 
 ```jsx
 ---
@@ -142,19 +142,19 @@ const name = "Astro";
 <MyComponent templateLiteralNameAttribute={`MyNameIs${name}`} />
 ```
 
-> 주의
-> HTML 속성은 문자열로 바뀔 수 있고, HTML 요소에 함수나 object를 전달하는 것이 불가능합니다. 예를 들어, Astro 컴포넌트 안에 HTML 요소에 이벤트 핸들러를 할당할 수 없습니다.
+> **주의**
+> HTML 속성은 문자열로 변환되므로 함수나 object를 HTML 요소로 전달할 수 없습니다. 예를 들어 Astro 컴포넌트 안의 HTML 요소에는 이벤트 핸들러를 할당할 수 없습니다:
 >
 > ```jsx
 > function handleClick () {
 >   console.log("button clicked!");
 > }
 > ---
-> <!-- ❌ This doesn't work! ❌ -->
+> <!-- ❌ 작동하지 않습니다! ❌ -->
 > <button onClick={handleClick}>Nothing will happen when you click me!</button>
 > ```
 >
-> 대신, vanilla JavaScript에서 했던 것 처럼 이벤트 핸들러를 추가한 client-side 스크립트를 사용합니다.
+> 대신, vanilla JavaScript에서 했던 것처럼 client-side 스크립트를 사용해 이벤트 핸들러를 추가합니다:
 >
 > ```jsx
 > ---
@@ -172,16 +172,46 @@ const name = "Astro";
 
 지역 변수는 동적으로 생성된 HTML 요소를 생성하기 위해 JSX 같은 함수에서 사용될 수 있습니다.
 
+```jsx
+---
+const items = ["Dog", "Cat", "Platypus"];
+---
+<ul>
+  {items.map((item) => (
+    <li>{item}</li>
+  ))}
+</ul>
+```
+
 Astro는 JSX 논리 연산자와 삼항 연산자를 사용해 HTML를 조건부로 표시할 수 있습니다.
+
+```jsx
+---
+const visible = true;
+---
+{visible && <p>Show me!</p>}
+
+{visible ? <p>Show me!</p> : <p>Else show me!</p>}
+```
 
 ### 동적 태그
 
-또한 HTML 태그 이름이나 컴포넌트 import에 변수를 설정함으로써 동적 태그를 사용할 수 있습니다.
+변수를 HTML 태그 이름이나 component import로 설정해 동적 태그를 사용할 수도 있습니다.
 
-동적 태그를 사용할 때:
+```jsx
+---
+import MyComponent from "./MyComponent.astro";
+const Element = 'div'
+const Component = MyComponent;
+---
+<Element>Hello!</Element> <!-- <div>Hello!</div> 로 렌더 -->
+<Component /> <!-- <MyComponent />  로 렌더 -->
+```
 
-- 변수 이름은 대문자여야 합니다. 예를 들어, `element`가 아닌 `Element`를 사용합니다. Astro는 HTML 태그 문자 그대로로 변수 이름을 렌더하기 위해 시도할 것입니다.
-- 직접작용은 지원하지 않습니다. client:\* hydration directives를 사용할 때, Astro는 어떤 컴포넌트가 생산을 위한 번들하는지 알필요가 있고 동적 태그 패턴은 작업으로부터 이를 예방합니다.
+동적 태그를 사용하는 경우:
+
+- 변수 이름은 대문자로 표시해야 합니다. 예를 들어 `element`가 아닌 `Element`를 사용합니다. 그렇지 않으면 Astro는 변수 이름을 HTML 태그 문자 그대로 렌더링 하려고 할 것입니다.
+- 직접 작용은 지원되지 않습니다. [client:\* hydration directives](https://docs.astro.build/en/core-concepts/framework-components/#hydrating-interactive-components)를 사용할 때, Astro는 production을 위해 번들화할 component를 알아야 하며 동적 태그 패턴으로 인해 이 작업이 수행되지 않습니다.
 
 ### Fragments & 다수 요소들
 
