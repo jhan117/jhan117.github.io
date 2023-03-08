@@ -111,7 +111,89 @@ import Button from './Button.astro';
 
 ## Component Props
 
+Astro component는 props를 정의하고 받아들일 수 있습니다. 그런 다음 이러한 props는 HTML 렌더링을 위해 component template에서 사용할 수 있게 됩니다. Props는 frontmatter 스크립트의 `Astro.props`로 전역에서 사용할 수 있습니다.
+
+여기에 `greeting` prop과 `name` prop을 받는 component의 예시가 있습니다. 받을 props는 전역 `Astro.props` object에서 분해된다는 점에 유의하세요.
+
+```jsx
+---
+// Usage: <GreetingHeadline greeting="Howdy" name="Partner" />
+const { greeting, name } = Astro.props;
+---
+<h2>{greeting}, {name}!</h2>
+```
+
+이 component가 다른 Astro components, 레이아웃 또는 페이지에서 import 되고 렌더링 할 때 이 props를 속성으로 전달할 수 있습니다:
+
+```jsx
+---
+import GreetingHeadline from './GreetingHeadline.astro';
+const name = "Astro"
+---
+<h1>Greeting Card</h1>
+<GreetingHeadline greeting="Hi" name={name} />
+<p>I hope you have a wonderful day!</p>
+```
+
+`Props` 유형 인터페이스를 사용해 TypeScript로 props를 정의할 수도 있습니다. Astro는 자동으로 frontmatter에서 `Props` 인터페이스를 선택하고 유형 경고/에러를 제공합니다. 이러한 props는 `Astro.props`에서 분해될 때 기본 값을 부여할 수도 있습니다.
+
+```jsx
+---
+interface Props {
+  name: string;
+  greeting?: string;
+}
+
+const { greeting = "Hello", name } = Astro.props;
+---
+<h2>{greeting}, {name}!</h2>
+```
+
+none이 제공될 때 사용하기 위한 기본 값을 component props에 지정할 수 있습니다.
+
+```jsx
+---
+const { greeting = "Hello", name = "Astronaut" } = Astro.props;
+---
+<h2>{greeting}, {name}!</h2>
+```
+
 ## Slots
+
+`<slot />` 요소는 다른 파일의 자식 요소를 component template에 주입(또는 "slot") 할 수 있는 외부 HTML content의 placeholder입니다.
+
+기본적으로, component에 전달된 모든 자식 요소들은 `<slot />`에서 렌더링 됩니다.
+
+> **NOTE**  
+> `Astro.props`를 사용해 component 전체에서 사용할 수 있는 Astro component에 전달된 속성인 props와 달리, slots은 자식 HTML 요소가 작성된 위치에서 렌더링 합니다.
+
+```jsx
+import Header from "./Header.astro";
+import Logo from "./Logo.astro";
+import Footer from "./Footer.astro";
+```
+
+```jsx
+<div id="content-wrapper">
+  <Header />
+  <Logo />
+  <h1>{title}</h1>
+  <slot />  <!-- 자식이 여기에 갈 것 -->
+  <Footer />
+</div>
+```
+
+```jsx
+---
+import Wrapper from '../components/Wrapper.astro';
+---
+<Wrapper title="Fred's Page">
+  <h2>All about Fred</h2>
+  <p>Here is some stuff about Fred.</p>
+</Wrapper>
+```
+
+이 패턴은 [Astro 레이아웃 component](https://docs.astro.build/en/core-concepts/layouts/)의 기본입니다: HTML content의 전체 페이지를 `<SomeLayoutComponent></SomeLayoutComponent>` 태그로 "wrapped" 하고 component에 보내 정의된 공통 페이지 요소 안에 렌더링 할 수 있습니다.
 
 ### Named Slots
 
