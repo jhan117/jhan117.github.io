@@ -195,9 +195,72 @@ import Wrapper from '../components/Wrapper.astro';
 
 이 패턴은 [Astro 레이아웃 component](https://docs.astro.build/en/core-concepts/layouts/)의 기본입니다: HTML content의 전체 페이지를 `<SomeLayoutComponent></SomeLayoutComponent>` 태그로 "wrapped" 하고 component에 보내 정의된 공통 페이지 요소 안에 렌더링 할 수 있습니다.
 
-### Named Slots
+### 명명된 슬롯 (Named Slots)
 
-### Fallback Content for Slots
+아스트로 컴포넌트에는 명명된 슬롯(named slots)도 있을 수 있습니다. 이렇게 하면 해당 슬롯 이름과 일치하는 HTML 요소만 슬롯의 위치로 전달할 수 있습니다.
+
+슬롯 이름은 `name` 속성을 사용해 지정됩니다:
+
+```jsx
+---
+import Header from './Header.astro';
+import Logo from './Logo.astro';
+import Footer from './Footer.astro';
+
+const { title } = Astro.props
+---
+<div id="content-wrapper">
+  <Header />
+  <slot name="after-header"/>  <!--  `slot="after-header"` 속성을 가진 자식들은 여기 -->
+  <Logo />
+  <h1>{title}</h1>
+  <slot />  <!--  `slot` 없이 또는 `slot="default"` 속성을 가진 자식들은 여기 -->
+  <Footer />
+  <slot name="after-footer"/>  <!--  `slot="after-footer"` 속성을 가진 자식들은 여기 -->
+</div>
+```
+
+특정 슬롯에 HTML 콘텐츠를 삽입하려면, 자식 요소에서 `slot` 속성을 사용해 슬롯의 이름을 지정하세요. 컴포넌트의 다른 모든 자식 요소들은 기본(명명되지 않은) `<slot />`에 삽입될 것입니다.
+
+```jsx
+---
+import Wrapper from '../components/Wrapper.astro';
+---
+<Wrapper title="Fred's Page">
+  <img src="https://my.photo/fred.jpg" slot="after-header">
+  <h2>All about Fred</h2>
+  <p>Here is some stuff about Fred.</p>
+  <p slot="after-footer">Copyright 2022</p>
+</Wrapper>
+```
+
+컴포넌트에서 일치하는 `<slot name="my-slot" />` 자리 표시자(placeholder)로 전달하길 원하는 자식 요소에서 `slot="my-slot"` 속성을 사용하세요.
+
+> **TIP**
+> 명명된 슬롯은 [UI 프레임워크 컴포넌트](https://docs.astro.build/en/core-concepts/framework-components/)에도 전달할 수도 있습니다!
+
+### 슬롯의 대체 콘텐츠 (Fallback Content for Slots)
+
+슬롯은 대체 콘텐츠를 렌더링 할 수도 있습니다. 슬롯에 전달된 일치하는 자식들이 없다면, `<slot />` 요소는 자체 자리 표시자(placeholder) 자식을 렌더링 합니다.
+
+```jsx
+---
+import Header from './Header.astro';
+import Logo from './Logo.astro';
+import Footer from './Footer.astro';
+
+const { title } = Astro.props
+---
+<div id="content-wrapper">
+  <Header />
+  <Logo />
+  <h1>{title}</h1>
+  <slot>
+    <p>This is my fallback content, if there is no child passed into slot</p>
+  </slot>
+  <Footer />
+</div>
+```
 
 ## HTML Components
 
