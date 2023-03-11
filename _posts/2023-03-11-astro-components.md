@@ -236,7 +236,7 @@ import Wrapper from '../components/Wrapper.astro';
 
 컴포넌트에서 일치하는 `<slot name="my-slot" />` 자리 표시자(placeholder)로 전달하길 원하는 자식 요소에서 `slot="my-slot"` 속성을 사용하세요.
 
-> **TIP**
+> **TIP**  
 > 명명된 슬롯은 [UI 프레임워크 컴포넌트](https://docs.astro.build/en/core-concepts/framework-components/)에도 전달할 수도 있습니다!
 
 ### 슬롯의 대체 콘텐츠 (Fallback Content for Slots)
@@ -272,7 +272,7 @@ HTML 컴포넌트는 유효한 HTML만 포함해야 하므로 주요 아스트�
 - 모든 `<script>` 태그는 번들 되지 않은 채로 남겨져 있으며 `is:inline`이 있는 것처럼 처리됩니다.
 - [`public/` 폴더에 있는 에셋들만 참조](https://docs.astro.build/en/guides/images/#public) 할 수 있습니다.
 
-> **NOTE**
+> **NOTE**  
 > HTML 컴포넌트 안에 있는 [`<slot />` 요소](#slots)는 아스트로 컴포넌트에 있는 것처럼 작동합니다. 대신에 [HTML 웹 컴포넌트 슬롯 요소](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)를 사용하려면, `<slot>` 요소에 `is:inline`을 추가하세요.
 
 ## 다음 단계 (Next Steps)
