@@ -262,9 +262,22 @@ const { title } = Astro.props
 </div>
 ```
 
-## HTML Components
+## HTML 컴포넌트 (HTML Components)
 
-## Next Steps
+아스트로는 컴포넌트로 `.html` 파일을 가져오고 사용하거나 이러한 파일들을 `src/pages/` 하위 디렉터리에 페이지로 놓는 것을 지원합니다. 프레임워크 없이 구축된 기존 사이트의 코드를 재사용하거나 컴포넌트에 동적 기능이 없는지 확인하려는 경우 HTML 컴포넌트를 사용할 수 있습니다.
+
+HTML 컴포넌트는 유효한 HTML만 포함해야 하므로 주요 아스트로 컴포넌트 기능이 없습니다.
+
+- frontmatter, 서버 측 가져오기나 동적 표현식을 지원하지 않습니다.
+- 모든 `<script>` 태그는 번들 되지 않은 채로 남겨져 있으며 `is:inline`이 있는 것처럼 처리됩니다.
+- [`public/` 폴더에 있는 에셋들만 참조](https://docs.astro.build/en/guides/images/#public) 할 수 있습니다.
+
+> **NOTE**
+> HTML 컴포넌트 안에 있는 [`<slot />` 요소](#slots)는 아스트로 컴포넌트에 있는 것처럼 작동합니다. 대신에 [HTML 웹 컴포넌트 슬롯 요소](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)를 사용하려면, `<slot>` 요소에 `is:inline`을 추가하세요.
+
+## 다음 단계 (Next Steps)
+
+📚 아스트로 프로젝트에 [UI 프레임워크 컴포넌트](https://docs.astro.build/en/core-concepts/framework-components/)를 사용하는 방법을 배워보세요.
 
 ---
 
