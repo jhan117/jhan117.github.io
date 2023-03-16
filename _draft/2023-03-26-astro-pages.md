@@ -19,7 +19,13 @@ toc_sticky: true
 - [`.html`](#html-pages)
 - `.js`/`.ts` ([엔드 포인트](https://docs.astro.build/en/core-concepts/endpoints/)로)
 
-## File-based routing
+## 파일 기반 라우팅 (File-based routing)
+
+아스트로는 파일 기반 라우팅이라고 불리는 라우팅 전략을 레버리지한다. 각 파일은 `src/pages/` 디렉터리에이 있는 ~이 된다. 엔드포엔트 사이트에서 기반한 그 파일 경로에
+
+하나의 파일은 다수의 페이지를 [동적 라우팅](https://docs.astro.build/en/core-concepts/routing/#dynamic-routes)을 사용하여 생성할 수도 있습니다. 이는 [콘텐츠 수집](https://docs.astro.build/en/guides/content-collections/) 또는 [CMS](https://docs.astro.build/en/guides/cms/)에서 처럼, 특별한 `/pages/`의 밖에 콘텐츠를 놓더라도 페이지를 생성하는 것을 허락합니다.
+
+[아스트로에서 라우팅](https://docs.astro.build/en/core-concepts/routing/)에 대해 더 읽어보세요.
 
 ### Link between pages
 
