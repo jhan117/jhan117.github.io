@@ -27,7 +27,9 @@ toc_sticky: true
 
 📚 [아스트로의 라우팅](https://docs.astro.build/en/core-concepts/routing/)에 대해 자세히 알아보세요.
 
-### Link between pages
+### 페이지 간 링크 (Link between pages)
+
+사이트의 다른 페이지에 연결하기 위해 아스트로 페이지에서 표준 HTML [`<a>` 요소](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a)를 작성하세요.
 
 ## Astro Pages
 
