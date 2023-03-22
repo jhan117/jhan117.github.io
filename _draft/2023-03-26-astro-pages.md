@@ -31,7 +31,35 @@ toc_sticky: true
 
 사이트의 다른 페이지에 연결하기 위해 아스트로 페이지에서 표준 HTML [`<a>` 요소](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a)를 작성하세요.
 
-## Astro Pages
+## 아스트로 페이지 (Astro Pages)
+
+아스트로 페이지는 `.astro` 파일 확장자를 사용하며 [아스트로 컴포넌트](2023-03-11-astro-components.md)와 동일한 기능을 지원합니다.
+
+```jsx
+---
+---
+<html lang="en">
+  <head>
+    <title>My Homepage</title>
+  </head>
+  <body>
+    <h1>Welcome to my website!</h1>
+  </body>
+</html>
+```
+
+모든 페이지에서 동일한 HTML 요소를 반복하지 않으려면, 자신의 [레이아웃 컴포넌트](https://docs.astro.build/en/core-concepts/layouts/)로 공통 `<head>` 및 `<body>` 요소를 이동할 수 있습니다. 원하는 만큼 레이아웃 컴포넌트를 많이 또는 적게 사용할 수 있습니다.
+
+```jsx
+---
+import MySiteLayout from '../layouts/MySiteLayout.astro';
+---
+<MySiteLayout>
+  <p>My page content, wrapped in a layout!</p>
+</MySiteLayout>
+```
+
+📚 아스트로의 [레이아웃 컴포넌트](https://docs.astro.build/en/core-concepts/layouts/)에 대해 자세히 알아보세요.
 
 ## Markdown/MDX Pages
 
