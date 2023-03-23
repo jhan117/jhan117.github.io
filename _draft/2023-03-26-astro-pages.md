@@ -61,7 +61,26 @@ import MySiteLayout from '../layouts/MySiteLayout.astro';
 
 📚 아스트로의 [레이아웃 컴포넌트](https://docs.astro.build/en/core-concepts/layouts/)에 대해 자세히 알아보세요.
 
-## Markdown/MDX Pages
+## Markdown/MDX 페이지(Pages)
+
+아스트로는 `src/pages/`에 있는 모든 마크다운(`.md`) 파일을 최종 웹사이트의 페이지로 취급합니다. 만약 [MDX 통합이 설치되어](https://docs.astro.build/en/guides/integrations-guide/mdx/#installation) 있다면 같은 방식으로 MDX(`.mdx`) 파일도 처리됩니다. 이들은 일반적으로 블로그 게시물 및 문서같이 텍스트가 많은 페이지에 사용됩니다.
+
+`src/content/`의 [마크다운이나 MDX 페이지 콘텐츠 모음](https://docs.astro.build/en/guides/content-collections/)은 [동적으로 페이지를 생성하는 데](https://docs.astro.build/en/core-concepts/routing/#dynamic-routes) 사용될 수 있습니다.
+
+페이지 레이아웃은 특히 [마크다운 파일](#markdownmdx-페이지pages)에서 유용합니다. 마크다운 파일은 특수 `layout` 머리말(front matter) 속성을 사용하여 전체 `<html>...<html>` 페이지 문서에서 마크다운 콘텐츠를 감쌀 [레이아웃 컴포넌트](https://docs.astro.build/en/core-concepts/layouts/)를 지정할 수 있습니다.
+
+```md
+---
+layout: "../layouts/MySiteLayout.astro"
+title: "My Markdown page"
+---
+
+# Title
+
+This is my page, written in **Markdown.**
+```
+
+📚 아스트로의 [마크다운](https://docs.astro.build/en/guides/markdown-content/)에 대해 자세히 알아보세요.
 
 ## HTML Pages
 
