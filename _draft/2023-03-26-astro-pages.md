@@ -82,7 +82,9 @@ This is my page, written in **Markdown.**
 
 📚 아스트로의 [마크다운](https://docs.astro.build/en/guides/markdown-content/)에 대해 자세히 알아보세요.
 
-## HTML Pages
+## HTML 페이지(Pages)
+
+`.html` 파일 확장자를 가진 파일은 `src/pages/`에 놓고 사이트의 페이지로 직접적 사용할 수 있습니다. 일부 주요 아스트로 기능은 [HTML 컴포넌트](2023-03-11-astro-components.md#html-컴포넌트-html-components)에서 지원되지 않습니다.
 
 ## Custom 404 Error Page
 
