@@ -13,10 +13,10 @@ toc_sticky: true
 
 아스트로는 `src/pages/` 디렉터리에서 다음 파일 형식을 지원합니다:
 
-- [`.astro`](#astro-pages)
-- [`.md`](#markdownmdx-pages)
+- [`.astro`](#아스트로-페이지-astro-pages)
+- [`.md`](#markdownmdx-페이지pages)
 - `.mdx` ([MDX Integration이 설치된](https://docs.astro.build/en/guides/integrations-guide/mdx/#installation) 상태)
-- [`.html`](#html-pages)
+- [`.html`](#html-페이지pages)
 - `.js`/`.ts` ([엔드 포인트](https://docs.astro.build/en/core-concepts/endpoints/)로)
 
 ## 파일 기반 라우팅 (File-based routing)
@@ -86,7 +86,11 @@ This is my page, written in **Markdown.**
 
 `.html` 파일 확장자를 가진 파일은 `src/pages/`에 놓고 사이트의 페이지로 직접적 사용할 수 있습니다. 일부 주요 아스트로 기능은 [HTML 컴포넌트](2023-03-11-astro-components.md#html-컴포넌트-html-components)에서 지원되지 않습니다.
 
-## Custom 404 Error Page
+## 사용자 지정 404 오류 페이지 (Custom 404 Error Page)
+
+사용자 지정 404 오류 페이지의 경우 `src/pages`에서 `404.astro`나 `404.md` 파일을 생성할 수 있습니다.
+
+이는 `404.html` 페이지로 빌드됩니다. 대부분 [배포 서비스](https://docs.astro.build/en/guides/deploy/)는 이를 찾아서 사용할 것입니다.
 
 ---
 
