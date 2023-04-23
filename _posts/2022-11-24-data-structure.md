@@ -6,6 +6,7 @@ toc: true
 toc_label: "자료 구조"
 toc_sticky: true
 last_modified_at: 2022-11-28
+use_math: true
 ---
 
 ## 자료 구조
