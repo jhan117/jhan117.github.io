@@ -117,13 +117,18 @@ const Component = MyComponent;
 - 변수 이름은 대문자로 표시해야 합니다. 예를 들어 `element`가 아닌 `Element`를 사용합니다. 그렇지 않으면 Astro는 변수 이름을 HTML 태그 문자 그대로 렌더링 하려고 할 것입니다.
 - 직접 작용은 지원되지 않습니다. [client:\* hydration directives](https://docs.astro.build/en/core-concepts/framework-components/#hydrating-interactive-components)를 사용할 때, Astro는 production을 위해 번들화할 component를 알아야 하며 동적 태그 패턴으로 인해 이 작업이 수행되지 않습니다.
 
-### Fragments & 다수 요소들
+### Fragments
 
-Astro 컴포넌트 템플릿은 JavaScript나 JS와 달리 모든 곳에 <div>나 <>로 감쌀 필요 없이 다수의 요소를 렌더할 수 있습니다.
+동적으로 생성한 다수의 요소에서 표현을 사용할 때, JavaScript나 JS에서 했던 것처럼 Fragment 안에 이 요소들을 감싸야 합니다. Astro는 <Fragment></Fragment> 나 약칭 <></> 둘다 사용하는 걸 지원합니다.
 
-그러나, 동적으로 생성한 다수의 요소에서 표현을 사용할 때, JavaScript나 JS에서 했던 것처럼 Fragment 안에 이 요소들을 감싸야 합니다. Astro는 <Fragemnt></Fragment> 나 약칭 <></> 둘다 사용하는 걸 지원합니다.
+Fragments는 또한 set:\* directives를 추가할 때 요소를 감싸는걸 피할 때 유용할 수 있습니다. 다음의 예시에서:
 
-Fragments는 또한 set:\* directives를 추가할 떄 요소를 감싸는걸 피할 떄 유용할 수 있습니다. 다음의 예시에서:
+```jsx
+---
+const htmlString = '<p>Raw HTML content</p>';
+---
+<Fragment set:html={htmlString} />
+```
 
 ### Astro와 JSX의 차이점
 
@@ -133,12 +138,36 @@ Astro 컴포넌트 문법은 HTML의 상위 집합입니다. 이는 HTML이나 J
 
 Astro에서 JSX에서 사용된 camelCase 대신에 모든 HTML 속성은 ㅍ준 kebab-case 형식을 사용합니다. class로 작업되는 React에서 지원되지 않습니다.
 
+```
+- <div className="box" dataValue="3" />
++ <div class="box" data-value="3" />
+```
+
+#### 다수 요소들
+
+Astro 컴포넌트 템플릿은 JavaScript나 JS와 달리 모든 곳에 <div>나 <>로 감쌀 필요 없이 다수의 요소를 렌더할 수 있습니다.
+
+```jsx
+---
+// Template with multiple elements
+---
+<p>No need to wrap elements in a single containing element.</p>
+<p>Astro supports multiple root elements in a template.</p>
+```
+
 #### 코멘트
 
 Astro에서 표준 HTML 코멘트나 JavaScript-style ㅋㅗ멘트를 사용할 수 있습니다.
 
+```jsx
+---
+---
+<!-- HTML comment syntax is valid in .astro files -->
+{/* JS comment syntax is also valid */}
+```
+
 > 주의
-> HTML-style 콤ㅔㄴ트는 브라우저 DOM에 포함될 수 있습니다. 반면에 JS 것은 스킵될 수 있습니다. TODO 메시지나 다른 개발-only 표현을 남기기 위해서, 대신에 JavaScript-style 코멘트를 사용하길 원할지도 모릅니다.
+> HTML-style 코멘트는 브라우저 DOM에 포함될 수 있습니다. 반면에 JS 것은 스킵될 수 있습니다. TODO 메시지나 다른 개발-only 표현을 남기기 위해서, 대신에 JavaScript-style 코멘트를 사용하길 원할지도 모릅니다.
 
 ---
 
